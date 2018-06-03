@@ -1,2 +1,8 @@
-# qconsolidate3
-Modified version of the QConsolidate plugin, based on the mod for OpenQuake
+## OQ-Consolidate
+
+OQ-Consolidate is a modified version of [QConsolidate](https://github.com/alexbruy/qconsolidate), that:
+
+- saves raster layers and converts vector layers to GeoPackage.
+- creates a project if it does not exist yet
+- allows to give a customized (validated) name to the consolidated project
+- allows to store all the project files in a zip file
