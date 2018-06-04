@@ -1,21 +1,21 @@
 [general]
-name=OQ-Consolidate
-description=QConsolidate for OpenQuake
-about=OQ-Consolidate is a modified version of QConsolidate (https://github.com/alexbruy/qconsolidate), that saves raster layers and converts vector layers to GeoPackage, creates a project if it does not exist yet, allows to give a customized (validated) name to the consolidated project, allows to store all the project files in a zip file
+name=qconsolidate3
+description=qconsolidate3 for Qgis
+about=qconsolidate3 is a modified version of oq-consolidate and QConsolidate (https://github.com/alexbruy/qconsolidate), that saves raster layers and converts vector layers to GeoPackage and SHP, creates a project if it does not exist yet, allows to give a customized (validated) name to the consolidated project, allows to store all the project files in a zip file
 category=Plugins
 version=0.1.0
 qgisMinimumVersion=3.0
 
-author=GEM Foundation
-email=devops@openquake.org
+author=danzig666
+email=abelke@gmail.com
 
 icon=icons/qconsolidate.png
 
-tags=openquake
+tags=consolidate
 
-homepage=https://github.com/gem/oq-consolidate/
-tracker=https://github.com/gem/oq-consolidate/issues
-repository=https://github.com/gem/oq-consolidate/
+homepage=https://github.com/danzig666/qconsolidate3
+tracker=https://github.com/danzig666/qconsolidate3/issues
+repository=https://github.com/danzig666/qconsolidate3/
 
 experimental=True
 deprecated=False
