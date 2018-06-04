@@ -232,6 +232,18 @@ class ConsolidateTask(QgsTask):
         else:
             vectorformat = 'GPKG'
             extension = 'gpkg'
+     
+            fields = vLayer.fields()
+            for i,field in enumerate(fields):
+                if field.name() == 'fid': 
+                    QgsMessageLog.logMessage("fid field - Layer: %d:'%s' / Field: '%s'" % (i, layerName, field.name()), 'OQ-Consolidate', level=Qgis.Info)
+                    vLayer.startEditing()
+                    vLayer.deleteAttribute(i)
+                    vLayer.commitChanges()
+                    QgsMessageLog.logMessage("Field deleted - Layer: %d:'%s' / Field: '%s'" % (i, layerName, field.name()), 'OQ-Consolidate', level=Qgis.Info)
+
+
+        vLayer.updateFields()
 
         vlayerName = layerName
         if not layerName:
@@ -245,7 +257,7 @@ class ConsolidateTask(QgsTask):
         if os.path.isfile(outFile):
             outFile = "%s/%s%s.%s" % (self.layersDir, vlayerName, str(uuid.uuid4()), extension)
 
-        QgsMessageLog.logMessage("Layer: '%s' / Filename: '%s'" % (vlayerName, outFile), 'OQ-Consolidate', level=Qgis.Info)
+        #QgsMessageLog.logMessage("Layer: '%s' / Filename: '%s'" % (vlayerName, outFile), 'OQ-Consolidate', level=Qgis.Info)
 
         # TODO: If it's already a geopackage, we chould just copy it instead of
         #       converting it
