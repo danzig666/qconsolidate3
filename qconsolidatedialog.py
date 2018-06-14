@@ -77,7 +77,7 @@ class QConsolidateDialog(QDialog):
         self.btnBrowse.clicked.connect(self.setOutDirectory)
 
     def initGui(self):
-        self.setWindowTitle('OQ-Consolidate')
+        self.setWindowTitle('QConsolidate3')
         self.project_name_lbl = QLabel('Project name')
         self.project_name_le = QLineEdit()
         self.checkBoxZip = QCheckBox('Consolidate in a Zip file')

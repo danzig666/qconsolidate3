@@ -28,7 +28,7 @@ from qgis.PyQt.QtCore import QSettings
 from qgis.core import Qgis, QgsMessageLog
 
 
-def log_msg(message, tag='OQ-Consolidate', level='I', message_bar=None,
+def log_msg(message, tag='QConsolidate3', level='I', message_bar=None,
             duration=None, exception=None):
     """
     Add a message to the QGIS message log. If a messageBar is provided,
@@ -104,6 +104,6 @@ def tr(message):
 
     :param message: the message to be translated
     :returns: the return value of
-              `QApplication.translate('OQ-Consolidate', message)`
+              `QApplication.translate('QConsolidate3', message)`
     """
-    return QApplication.translate('OQ-Consolidate', message)
+    return QApplication.translate('QConsolidate3', message)

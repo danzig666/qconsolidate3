@@ -1,6 +1,6 @@
-## qconsolidate3
+## QConsolidate3
 
-qconsolidate3 is a fork of [OQ-Consolidate](https://github.com/gem/oq-consolidate), which is a modified version of [QConsolidate](https://github.com/alexbruy/qconsolidate), that:
+QConsolidate3 is a fork of [OQ-Consolidate](https://github.com/gem/oq-consolidate), which is a modified version of [QConsolidate](https://github.com/alexbruy/qconsolidate), that:
 
 - converts vector layers to GeoPackage or SHP. (raster layers are copied as is)
 - updated layer enumeration based on layer id (previously was parsing layer names, which can have duplicates in Qgis)

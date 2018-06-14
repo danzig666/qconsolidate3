@@ -67,10 +67,10 @@ class AboutDialog(QDialog):
         self.btnClose.clicked.connect(self.reject)
 
     def initGui(self):
-        self.setWindowTitle('OQ-Consolidate')
+        self.setWindowTitle('QConsolidate3')
         self.buttonBox = QDialogButtonBox(
             QDialogButtonBox.Close | QDialogButtonBox.Help)
-        self.label = QLabel("OQ-Consolidate")
+        self.label = QLabel("QConsolidate3")
         self.label.setStyleSheet("font-weight: bold")
         self.lblLogo = QLabel()
         self.lblVersion = QLabel()
@@ -87,7 +87,7 @@ class AboutDialog(QDialog):
 
     def openHelp(self):
         QDesktopServices.openUrl(QUrl(
-            "https://github.com/gem/oq-consolidate"))
+            "https://github.com/danzig666/qconsolidate3"))
 
     def getAboutText(self):
         return self.tr(
@@ -95,12 +95,13 @@ class AboutDialog(QDialog):
             <p>Consolidates all layers from current QGIS project into
             one directory (optionally zipping the whole project in a
             single file).</p>
-            <p><strong>Developed by</strong>: GEM Foundation</p>
+            <p><strong>Developed by</strong>: Danzig </p>
             <p>Fork of the q-consolidate plugin by Alexander Bruy</p>
+            <p>and the OQ-Consolidate plugin GEM Foundation</p>
             <p><strong>Homepage</strong>:
-            <a href="https://github.com/gem/oq-consolidate/">
+            <a href="https://github.com/danzig666/qconsolidate3/">
             homepage</a></p>
             <p>Please report bugs at
-            <a href="https://github.com/gem/oq-consolidate/issues">
+            <a href="https://github.com/danzig666/qconsolidate3/issues">
             bugtracker</a>.</p>
             """)

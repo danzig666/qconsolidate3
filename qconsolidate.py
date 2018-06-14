@@ -50,23 +50,23 @@ class QConsolidatePlugin(object):
                            + self.qgsVersion[2] + "."
                            + self.qgsVersion[3])
             msg = tr("QGIS %s detected.\n" % qgisVersion)
-            msg += tr("This version of OQ-Consolidate requires at least"
+            msg += tr("This version of QConsolidate3 requires at least"
                       " QGIS version 3.0.\nPlugin will not be enabled.")
             log_msg(msg, level='C', message_bar=self.iface.messageBar())
             return None
 
         self.actionRun = QAction(
             QIcon(":/icons/qconsolidate.png"),
-            "OQ-Consolidate",
+            "QConsolidate3",
             self.iface.mainWindow())
         self.actionRun.setStatusTip(
             QCoreApplication.translate(
-                "OQ-Consolidate",
+                "QConsolidate3",
                 ("Consolidates all layers from current"
                  " QGIS project into one directory")))
         self.actionAbout = QAction(
             QIcon(":/icons/about.png"),
-            "About OQ-Consolidate",
+            "About QConsolidate3",
             self.iface.mainWindow())
 
         self.actionRun.triggered.connect(self.run)
@@ -74,19 +74,19 @@ class QConsolidatePlugin(object):
 
         self.iface.addPluginToMenu(
             QCoreApplication.translate(
-                "OQ-Consolidate", "OQ-Consolidate"), self.actionRun)
+                "QConsolidate3", "QConsolidate3"), self.actionRun)
         self.iface.addPluginToMenu(
             QCoreApplication.translate(
-                "OQ-Consolidate", "OQ-Consolidate"), self.actionAbout)
+                "QConsolidate3", "QConsolidate3"), self.actionAbout)
         self.iface.addToolBarIcon(self.actionRun)
 
     def unload(self):
         self.iface.removePluginMenu(
             QCoreApplication.translate(
-                "OQ-Consolidate", "OQ-Consolidate"), self.actionRun)
+                "QConsolidate3", "QConsolidate3"), self.actionRun)
         self.iface.removePluginMenu(
             QCoreApplication.translate(
-                "OQ-Consolidate", "OQ-Consolidate"), self.actionAbout)
+                "QConsolidate3", "QConsolidate3"), self.actionAbout)
         self.iface.removeToolBarIcon(self.actionRun)
 
     def run(self):

@@ -62,7 +62,7 @@ class ConsolidateTask(QgsTask):
         self.saveToZip = saveToZip
         self.isSHP = (isSHP == "SHP")
         if self.isSHP:
-            QgsMessageLog.logMessage("SHP export selected", 'OQ-Consolidate', level=Qgis.Info)
+            QgsMessageLog.logMessage("SHP export selected", 'QConsolidate3', level=Qgis.Info)
         self.progressMax = None
         self.setDependentLayers(QgsProject.instance().mapLayers().values())
 
@@ -118,7 +118,7 @@ class ConsolidateTask(QgsTask):
             if not layer.isValid():
                 raise TypeError("Layer %s is invalid" % layer.name())
             lType = layer.type()
-#            QgsMessageLog.logMessage("!: '%s'" % lType, 'OQ-Consolidate', level=Qgis.Info)
+#            QgsMessageLog.logMessage("!: '%s'" % lType, 'QConsolidate3', level=Qgis.Info)
             lProviderType = layer.providerType()
             lName = layer.name()
             lID = layer.id()
@@ -129,16 +129,16 @@ class ConsolidateTask(QgsTask):
                     e, layer, lName, lID)
                 outFiles.append(outFile)
             elif lType == QgsMapLayer.RasterLayer:
-                #QgsMessageLog.logMessage("!!!!RasterLayer: '%s', provider '%s'" % (lName, lProviderType), 'OQ-Consolidate', level=Qgis.Info)
+                #QgsMessageLog.logMessage("!!!!RasterLayer: '%s', provider '%s'" % (lName, lProviderType), 'QConsolidate3', level=Qgis.Info)
 
                 # FIXME: should we convert also this to GeoPackage?
                 if lProviderType == 'gdal':
                     if self.checkGdalWms(lUri):
-                        #QgsMessageLog.logMessage("!!!!CopyRasterLayer: '%s'" % lName, 'OQ-Consolidate', level=Qgis.Info)
+                        #QgsMessageLog.logMessage("!!!!CopyRasterLayer: '%s'" % lName, 'QConsolidate3', level=Qgis.Info)
                         outFile = self.copyXmlRasterLayer(e, layer, lName, lID)
                         outFiles.append(outFile)
                     else:
-                        #QgsMessageLog.logMessage("!!!!CopyRasterLayer not WMS: '%s'" % lName, 'OQ-Consolidate', level=Qgis.Info)
+                        #QgsMessageLog.logMessage("!!!!CopyRasterLayer not WMS: '%s'" % lName, 'QConsolidate3', level=Qgis.Info)
                         outFile = self.copyRasterLayer(e, layer, lName, lID)
                         outFiles.append(outFile)
             else:
@@ -254,7 +254,7 @@ class ConsolidateTask(QgsTask):
         #vLayer.setProviderEncoding(u'UTF-8')
         #vLayer.dataProvider().setEncoding(u'UTF-8')
         enc = u'UTF-8'
-        #QgsMessageLog.logMessage("Layer '%s' / Encoding: '%s'" % (layerName, vLayer.dataProvider().encoding()), 'OQ-Consolidate', level=Qgis.Info)
+        #QgsMessageLog.logMessage("Layer '%s' / Encoding: '%s'" % (layerName, vLayer.dataProvider().encoding()), 'QConsolidate3', level=Qgis.Info)
 
         if self.isSHP:
             vectorformat = 'ESRI Shapefile'
@@ -266,11 +266,11 @@ class ConsolidateTask(QgsTask):
             fields = vLayer.fields()
             for i,field in enumerate(fields):
                 if field.name() == 'fid': 
-                    QgsMessageLog.logMessage("fid field - Layer: %d:'%s' / Field: '%s'" % (i, layerName, field.name()), 'OQ-Consolidate', level=Qgis.Info)
+                    QgsMessageLog.logMessage("fid field - Layer: %d:'%s' / Field: '%s'" % (i, layerName, field.name()), 'QConsolidate3', level=Qgis.Info)
                     vLayer.startEditing()
                     vLayer.deleteAttribute(i)
                     vLayer.commitChanges()
-                    QgsMessageLog.logMessage("Field deleted - Layer: %d:'%s' / Field: '%s'" % (i, layerName, field.name()), 'OQ-Consolidate', level=Qgis.Info)
+                    QgsMessageLog.logMessage("Field deleted - Layer: %d:'%s' / Field: '%s'" % (i, layerName, field.name()), 'QConsolidate3', level=Qgis.Info)
 
 
         vLayer.updateFields()
@@ -287,7 +287,7 @@ class ConsolidateTask(QgsTask):
         if os.path.isfile(outFile):
             outFile = "%s/%s%s.%s" % (self.layersDir, vlayerName, str(uuid.uuid4()), extension)
 
-        #QgsMessageLog.logMessage("Layer: '%s' / Filename: '%s'" % (vlayerName, outFile), 'OQ-Consolidate', level=Qgis.Info)
+        #QgsMessageLog.logMessage("Layer: '%s' / Filename: '%s'" % (vlayerName, outFile), 'QConsolidate3', level=Qgis.Info)
 
         # TODO: If it's already a geopackage, we chould just copy it instead of
         #       converting it
