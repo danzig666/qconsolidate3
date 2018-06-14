@@ -129,13 +129,17 @@ class ConsolidateTask(QgsTask):
                     e, layer, lName, lID)
                 outFiles.append(outFile)
             elif lType == QgsMapLayer.RasterLayer:
-                QgsMessageLog.logMessage("!!!!RasterLayer: '%s'" % lName, 'OQ-Consolidate', level=Qgis.Info)
+                #QgsMessageLog.logMessage("!!!!RasterLayer: '%s', provider '%s'" % (lName, lProviderType), 'OQ-Consolidate', level=Qgis.Info)
 
                 # FIXME: should we convert also this to GeoPackage?
                 if lProviderType == 'gdal':
                     if self.checkGdalWms(lUri):
-                        outFile = self.copyXmlRasterLayer(
-                            e, layer, lName)
+                        #QgsMessageLog.logMessage("!!!!CopyRasterLayer: '%s'" % lName, 'OQ-Consolidate', level=Qgis.Info)
+                        outFile = self.copyXmlRasterLayer(e, layer, lName, lID)
+                        outFiles.append(outFile)
+                    else:
+                        #QgsMessageLog.logMessage("!!!!CopyRasterLayer not WMS: '%s'" % lName, 'OQ-Consolidate', level=Qgis.Info)
+                        outFile = self.copyRasterLayer(e, layer, lName, lID)
                         outFiles.append(outFile)
             else:
                 raise TypeError('Layer %s (type %s) is not supported'
@@ -202,7 +206,7 @@ class ConsolidateTask(QgsTask):
                 if self.isCanceled():
                     raise TaskCanceled('Consolidation canceled')
 
-    def copyXmlRasterLayer(self, layerElement, vLayer, layerName):
+    def copyXmlRasterLayer(self, layerElement, vLayer, layerName, layerID):
         outFile = "%s/%s.xml" % (self.layersDir, layerName)
         try:
             copyfile(vLayer.dataProvider().dataSourceUri(), outFile)
@@ -211,9 +215,33 @@ class ConsolidateTask(QgsTask):
             raise IOError(msg)
 
         # update project
-        layerNode = self.findLayerInProject(layerElement, layerName)
+        layerNode = self.findLayerInProject(layerElement, layerID)
         tmpNode = layerNode.firstChildElement("datasource")
         p = "./layers/%s.xml" % layerName
+        tmpNode.firstChild().setNodeValue(p)
+        tmpNode = layerNode.firstChildElement("provider")
+        tmpNode.firstChild().setNodeValue("gdal")
+        return outFile
+
+    def copyRasterLayer(self, layerElement, vLayer, layerName, layerID):
+        vlayerName = layerName
+        if not layerName:
+          vlayerName = str(uuid.uuid4())
+        vlayerName = str(vlayerName).strip().replace('/', '_')
+
+        orgname, extension = os.path.splitext(vLayer.dataProvider().dataSourceUri())
+
+        outFile = "%s/%s%s" % (self.layersDir, vlayerName, extension)
+        try:
+            copyfile(vLayer.dataProvider().dataSourceUri(), outFile)
+        except IOError:
+            msg = self.tr("Cannot copy layer %s") % layerName
+            raise IOError(msg)
+
+        # update project
+        layerNode = self.findLayerInProject(layerElement, layerID)
+        tmpNode = layerNode.firstChildElement("datasource")
+        p = "./layers/%s%s" % (vlayerName, extension)
         tmpNode.firstChild().setNodeValue(p)
         tmpNode = layerNode.firstChildElement("provider")
         tmpNode.firstChild().setNodeValue("gdal")
