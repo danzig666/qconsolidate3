@@ -29,6 +29,7 @@ from qgis.PyQt.QtCore import (
                               QDir,
                               QFile,
                               QFileInfo,
+                              QSettings,
                               )
 from qgis.PyQt.QtWidgets import (
                                  QCheckBox,
@@ -74,6 +75,9 @@ class QConsolidateDialog(QDialog):
         if project_name:
             self.project_name_le.setText(project_name)
 
+        self.btnOk.setEnabled(bool(self.project_name_le.text()) and
+                              bool(self.leOutputDir.text()))
+
         self.btnBrowse.clicked.connect(self.setOutDirectory)
 
     def initGui(self):
@@ -86,6 +90,11 @@ class QConsolidateDialog(QDialog):
 
         self.label = QLabel("Output directory")
         self.leOutputDir = QLineEdit()
+
+        s = QSettings()
+        lastdir = s.value("qconsolidate3/lastdir", "")
+        self.leOutputDir.setText(lastdir)
+
         self.btnBrowse = QPushButton("Browse...")
         self.buttonBox = QDialogButtonBox(
             QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
@@ -126,11 +135,14 @@ class QConsolidateDialog(QDialog):
                               bool(self.leOutputDir.text()))
 
     def setOutDirectory(self):
+        s = QSettings()
+        lastdir = s.value("qconsolidate3/lastdir", ".")
         outDir = QFileDialog.getExistingDirectory(
-            self, self.tr("Select output directory"), ".")
+            self, self.tr("Select output directory"), lastdir)
         if not outDir:
             return
 
+        s.setValue("qconsolidate3/lastdir", outDir)
         self.leOutputDir.setText(outDir)
 
     def accept(self):
