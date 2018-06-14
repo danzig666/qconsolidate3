@@ -222,9 +222,11 @@ class ConsolidateTask(QgsTask):
     def convertGenericVectorLayer(self, layerElement, vLayer, layerName, layerID):
         crs = vLayer.crs()
 
-        vLayer.setProviderEncoding(u'UTF-8')
-        vLayer.dataProvider().setEncoding(u'UTF-8')
-        enc = vLayer.dataProvider().encoding()
+        #orgenc = vLayer.dataProvider().encoding()
+        #vLayer.setProviderEncoding(u'UTF-8')
+        #vLayer.dataProvider().setEncoding(u'UTF-8')
+        enc = u'UTF-8'
+        #QgsMessageLog.logMessage("Layer '%s' / Encoding: '%s'" % (layerName, vLayer.dataProvider().encoding()), 'OQ-Consolidate', level=Qgis.Info)
 
         if self.isSHP:
             vectorformat = 'ESRI Shapefile'
