@@ -9,4 +9,5 @@ QConsolidate3 is a fork of [OQ-Consolidate](https://github.com/gem/oq-consolidat
 - creates a project if it does not exist yet
 - allows to give a customized (validated) name to the consolidated project
 - allows to store all the project files in a zip file
+
 WARNING: saving to GeoPackage deletes existing FID fields! (this is a workaroung for a bug in QGIS3)
