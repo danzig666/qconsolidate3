@@ -12,4 +12,3 @@ QConsolidate3 is a fork of [OQ-Consolidate](https://github.com/gem/oq-consolidat
 
 WARNING: saving to GeoPackage deletes existing FID fields in source files! (this is a workaroung for a bug in QGIS3)
 
-E-mail contact: abel@t4terv.hu
