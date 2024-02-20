@@ -114,13 +114,25 @@ class ConsolidateTask(QgsTask):
         if self.isCanceled():
             raise TaskCanceled('Consolidation canceled')
 
+        usedFilenames = []
         for i, layer in enumerate(layers.values()):
             if not layer.isValid():
                 raise TypeError("Layer %s is invalid" % layer.name())
             lType = layer.type()
 #            QgsMessageLog.logMessage("!: '%s'" % lType, 'QConsolidate3', level=Qgis.Info)
             lProviderType = layer.providerType()
-            lName = layer.name()
+            # ensure filename is valid
+            lName = re.sub(r'[\/:*?"<>|]', '_', layer.name())
+            # ensure this layer name is unique
+            newLName = lName
+            count = 2
+            while newLName in usedFilenames:
+                newLName = lName + '_' + str(count)
+                count += 1
+            lName = newLName
+            # note this filename is used
+            usedFilenames.append(lName)
+            
             lID = layer.id()
             lUri = layer.dataProvider().dataSourceUri()
             if lType == QgsMapLayer.VectorLayer:
