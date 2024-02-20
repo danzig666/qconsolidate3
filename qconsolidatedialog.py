@@ -196,7 +196,7 @@ class QConsolidateDialog(QDialog):
         # copy project file
         projectFile = QgsProject.instance().fileName()
         try:
-            if projectFile:
+            if os.path.isfile(projectFile):
                 f = QFile(projectFile)
                 newProjectFile = os.path.join(outputDir,
                                               '%s.qgs' % project_name)
